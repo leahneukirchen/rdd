@@ -1,0 +1,5 @@
+include Makefile
+
+CC=musl-gcc
+CFLAGS+=-fno-asynchronous-unwind-tables -fno-stack-protector
+LDFLAGS=-static -Wl,-z -Wl,noexecstack
