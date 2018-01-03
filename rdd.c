@@ -17,7 +17,7 @@ main(int argc, char *argv[])
 	sosemanuk_run_context rc;
 
 	int fd, c, i, v = 0, r = 4;
-	char *src = "/dev/urandom";
+	const char *src = "/dev/urandom";
 
 	while ((c = getopt(argc, argv, "i:r:v")) != -1)
 		switch (c) {
