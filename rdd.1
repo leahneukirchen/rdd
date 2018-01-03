@@ -1,0 +1,76 @@
+.Dd January 3, 2018
+.Dt RDD 1
+.Os
+.Sh NAME
+.Nm rdd
+.Nd random data dump
+.Sh SYNOPSIS
+.Nm
+.Op Fl i Ar source
+.Op Fl r Ar rekeymb
+.Op Fl v
+.Sh DESCRIPTION
+.Nm
+is a high-speed, cryptographically safe random data generator
+using the reference implementation of the eSTREAM Profile 1 SOSEMANUK
+stream cipher.
+It is designed to fill crypto devices with random data.
+.Pp
+Random binary data is outputted to standard output.
+.Pp
+The options are as follows:
+.Bl -tag -width Ds
+.It Fl i Ar source
+Read key and IVs from
+.Ar source
+(default:
+.Pa /dev/urandom )
+.It Fl r Ar rekeymb
+Reload the IV every
+.Ar rekeymb
+megabytes of output (default: 4).
+.It Fl v
+Print a 
+.Li Sq \&.
+to standard error on every rekey.
+.El
+.Sh EXIT STATUS
+.Ex -std
+.Sh SEE ALSO
+.Xr dd 1 ,
+.Xr random 4 ,
+.Xr random 7
+.Sh NOTES
+rdd reads 32 random bytes for the initial key and 16 bytes for every rekeying
+from the random source.  Setting
+.Ar rekeymb
+to -1 never rekeys.
+.Pp
+This implementation passed dieharder 3.31.1 "-a" and
+PractRand/RNG_test 0.90 (tested up to 512 GB).
+.Sh AUTHORS
+.An Leah Neukirchen Aq Mt leah@vuxu.org
+.Sh LICENSE
+.Nm
+is in the public domain.
+.Pp
+To the extent possible under law,
+the creator of this work
+has waived all copyright and related or
+neighboring rights to this work.
+.Pp
+.Lk http://creativecommons.org/publicdomain/zero/1.0/
+.Pp
+This program includes code taken from
+.Lk http://www.ecrypt.eu.org/stream/p3ciphers/sosemanuk/sosemanuk_p3source.zip
+as of 2013-04-13.
+An error message which can never occur in rdd usage
+has been #ifdef'ed out.
+.Pp
+\[co] 2005 X-CRYPT project. This software is provided 'as-is', without
+any express or implied warranty. In no event will the authors be held
+liable for any damages arising from the use of this software.
+.Pp
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to no restriction.
