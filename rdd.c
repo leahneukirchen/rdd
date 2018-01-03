@@ -53,8 +53,12 @@ usage:
 		for (i = 0; r < 0 || i < r*1024*1024; i += sizeof buf) {
 			sosemanuk_prng(&rc, buf, sizeof buf);
 			while (write(1, buf, sizeof buf) != sizeof buf)
-				if (errno && errno != EINTR)
-					fail(4, "write error\n");
+				if (errno) {
+					if (errno == ENOSPC)
+						exit(0);
+					if (errno != EINTR)
+						fail(4, "write error\n");
+				}
 		}
 	}
 }
