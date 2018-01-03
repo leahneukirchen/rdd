@@ -16,7 +16,8 @@ main(int argc, char *argv[])
 	sosemanuk_key_context kc;
 	sosemanuk_run_context rc;
 
-	int fd, c, i, v = 0, r = 4;
+	int fd, c, v = 0;
+	long i, r = 4;
 	const char *src = "/dev/urandom";
 
 	while ((c = getopt(argc, argv, "i:r:v")) != -1)
