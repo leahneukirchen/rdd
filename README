@@ -1,0 +1,63 @@
+RDD(1)                      General Commands Manual                     RDD(1)
+
+NAME
+     rdd – random data dump
+
+SYNOPSIS
+     rdd [-i source] [-r rekeymb] [-v]
+
+DESCRIPTION
+     rdd is a high-speed, cryptographically safe random data generator using
+     the reference implementation of the eSTREAM Profile 1 SOSEMANUK stream
+     cipher.  It is designed to fill crypto devices with random data.
+
+     Random binary data is outputted to standard output.
+
+     The options are as follows:
+
+     -i source
+             Read key and IVs from source (default: /dev/urandom)
+
+     -r rekeymb
+             Reload the IV every rekeymb megabytes of output (default: 4).
+
+     -v      Print a ‘.’ to standard error on every rekey.
+
+EXIT STATUS
+     The rdd utility exits 0 on success, and >0 if an error occurs.
+
+SEE ALSO
+     dd(1), random(4), random(7)
+
+NOTES
+     rdd reads 32 random bytes for the initial key and 16 bytes for every
+     rekeying from the random source.  Setting rekeymb to -1 never rekeys.
+
+     This implementation passed dieharder 3.31.1 "-a" and PractRand/RNG_test
+     0.90 (tested up to 512 GB).
+
+AUTHORS
+     Leah Neukirchen <leah@vuxu.org>
+
+LICENSE
+     rdd is in the public domain.
+
+     To the extent possible under law, the creator of this work has waived all
+     copyright and related or neighboring rights to this work.
+
+           http://creativecommons.org/publicdomain/zero/1.0/
+
+     This program includes code taken from
+           http://www.ecrypt.eu.org/stream/p3ciphers/sosemanuk/sosemanuk_p3source.zip
+     as of 2013-04-13.  An error message which can never occur in rdd usage
+     has been #ifdef'ed out.
+
+     © 2005 X-CRYPT project.  This software is provided 'as-is', without any
+     express or implied warranty.  In no event will the authors be held liable
+     for any damages arising from the use of this software.
+
+     Permission is granted to anyone to use this software for any purpose,
+     including commercial applications, and to alter it and redistribute it
+     freely, subject to no restriction.
+
+Void Linux                      January 3, 2018                     Void Linux
