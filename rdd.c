@@ -32,6 +32,9 @@ usage:
 	if (argc > optind)
 		goto usage;
 
+	if (isatty(1))
+		fail(5, "cowardly not dumping to tty\n");
+
 	if ((fd = open(src, O_RDONLY)) < 0)
 		fail(2, "failed to open random source\n");
 
