@@ -34,7 +34,7 @@ NOTES
      rekeying from the random source.  Setting rekeymb to -1 never rekeys.
 
      This implementation passed dieharder 3.31.1 "-a" and PractRand/RNG_test
-     0.90 (tested up to 512 GB).
+     0.93 (tested up to 16 TB).
 
 AUTHORS
      Leah Neukirchen <leah@vuxu.org>
