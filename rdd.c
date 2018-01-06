@@ -7,7 +7,7 @@
 
 #include "sosemanuk.h"
 
-#define fail(i, s) write(2, s, (sizeof s)-1), exit(i);
+#define fail(i, s) write(2, "rdd: " s, 5+(sizeof s)-1), exit(i);
 
 int
 main(int argc, char *argv[])
@@ -34,7 +34,7 @@ usage:
 		goto usage;
 
 	if (isatty(1))
-		fail(5, "cowardly not dumping to tty\n");
+		fail(5, "cowardly not dumping random data to tty\n");
 
 	if ((fd = open(src, O_RDONLY)) < 0)
 		fail(2, "failed to open random source\n");
