@@ -8,10 +8,10 @@ SYNOPSIS
 
 DESCRIPTION
      rdd is a high-speed, cryptographically safe random data generator using
-     the reference implementation of the eSTREAM Profile 1 SOSEMANUK stream
-     cipher.  It is designed to fill crypto devices with random data.
+     optimized versions of the ChaCha8 stream cipher, depending on your CPU.
+     It is designed to fill crypto devices with random data.
 
-     Random binary data is outputted to standard output.
+     Random binary data is written to standard output.
 
      The options are as follows:
 
@@ -30,11 +30,11 @@ SEE ALSO
      dd(1), random(4), random(7)
 
 NOTES
-     rdd reads 32 random bytes for the initial key and 16 bytes for every
+     rdd reads 40 random bytes for the initial key and 32 bytes for every
      rekeying from the random source.  Setting rekeymb to -1 never rekeys.
 
      This implementation passed dieharder 3.31.1 "-a" and PractRand/RNG_test
-     0.93 (tested up to 32 TB).
+     0.95 (tested up to 32 TB).
 
 AUTHORS
      Leah Neukirchen <leah@vuxu.org>
@@ -45,19 +45,8 @@ LICENSE
      To the extent possible under law, the creator of this work has waived all
      copyright and related or neighboring rights to this work.
 
-           http://creativecommons.org/publicdomain/zero/1.0/
+     http://creativecommons.org/publicdomain/zero/1.0/
 
-     This program includes code taken from
-           http://www.ecrypt.eu.org/stream/p3ciphers/sosemanuk/sosemanuk_p3source.zip
-     as of 2013-04-13.  An error message which can never occur in rdd usage
-     has been #ifdef'ed out.
+     This program uses the public domain library chacha-opt.
 
-     © 2005 X-CRYPT project.  This software is provided 'as-is', without any
-     express or implied warranty.  In no event will the authors be held liable
-     for any damages arising from the use of this software.
-
-     Permission is granted to anyone to use this software for any purpose,
-     including commercial applications, and to alter it and redistribute it
-     freely, subject to no restriction.
-
-Void Linux                      January 3, 2018                     Void Linux
+Void Linux                      April 19, 2020                      Void Linux

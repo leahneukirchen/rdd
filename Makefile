@@ -1,19 +1,23 @@
 ALL=rdd
 
 CFLAGS=-g -O3 -Wall -Wno-switch -Wextra -Wwrite-strings
+CPPFLAGS=-I./chacha-opt/app/include
 
 DESTDIR=
 PREFIX=/usr/local
 BINDIR=$(PREFIX)/bin
 MANDIR=$(PREFIX)/share/man
 
-all: $(ALL)
+all: $(ALL) chacha-opt/bin/chacha.lib
 
 clean: FRC
 	rm -f $(ALL) *.o
+	make -C chacha-opt clean
 
-rdd: sosemanuk.o rdd.o
-rdd.c: sosemanuk.h
+rdd: rdd.o chacha-opt/bin/chacha.lib
+
+chacha-opt/bin/chacha.lib:
+	cd chacha-opt && ./configure && make
 
 install: FRC all
 	mkdir -p $(DESTDIR)$(BINDIR) $(DESTDIR)$(MANDIR)/man1 $(DESTDIR)$(ZSHCOMPDIR)

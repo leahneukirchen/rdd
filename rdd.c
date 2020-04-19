@@ -5,16 +5,17 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "sosemanuk.h"
+#include "chacha.h"
 
 #define fail(i, s) write(2, "rdd: " s, 5+(sizeof s)-1), exit(i);
 
 int
 main(int argc, char *argv[])
 {
-	unsigned char key[32], iv[16], buf[120*512];
-	sosemanuk_key_context kc;
-	sosemanuk_run_context rc;
+	chacha_state state;
+	chacha_key key;
+	chacha_iv iv;
+	unsigned char buf[16*4096];
 
 	int fd, c, v = 0;
 	long i, r = 4;
@@ -33,28 +34,31 @@ usage:
 	if (argc > optind)
 		goto usage;
 
+	if (chacha_startup() != 0)
+		fail(255, "self-test failed\n");
+
 	if (isatty(1))
 		fail(5, "cowardly not dumping random data to tty\n");
 
 	if ((fd = open(src, O_RDONLY)) < 0)
 		fail(2, "failed to open random source\n");
 
-	if (read(fd, key, sizeof key) != sizeof key)
-		fail(3, "failed to read key from random source\n");
-	sosemanuk_schedule(&kc, key, sizeof key);
+	if (read(fd, iv.b, sizeof iv.b) != sizeof iv.b)
+		fail(3, "failed to read iv from random source\n");
 
 	while (1) {
-		if (read(fd, iv, sizeof iv) != sizeof iv)
-			fail(3, "failed to read iv from random source\n");
-		sosemanuk_init(&rc, &kc, iv, sizeof iv);
+		if (read(fd, key.b, sizeof key.b) != sizeof key.b)
+			fail(3, "failed to read key from random source\n");
+		chacha_init(&state, &key, &iv, 8);
+
 		if (v)
 			write(2, ".", 1);
 
 		for (i = 0; r < 0 || i < r*1024*1024; i += sizeof buf) {
-			sosemanuk_prng(&rc, buf, sizeof buf);
+			chacha_update(&state, 0, buf, sizeof buf);
 			while (write(1, buf, sizeof buf) != sizeof buf)
 				if (errno) {
-					if (errno == ENOSPC)
+					if (errno == ENOSPC || errno == EPIPE)
 						exit(0);
 					if (errno != EINTR)
 						fail(4, "write error\n");
